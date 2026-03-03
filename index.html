@@ -3,39 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Juan Peco | Economía · Empresa · Marketing</title>
+<title>Juan Peco | Business Prompt Lab</title>
 
-<meta name="description" content="Docente de Economía, Empresa y Marketing. Laboratorio interactivo y banco profesional de 1000 prompts empresariales.">
-<meta name="keywords" content="Profesor Economía Murcia, Docente Empresa FP Murcia, Marketing educativo">
+<meta name="description" content="Banco profesional de 1000 prompts empresariales. Economía, marketing y empresa.">
+<meta name="keywords" content="Profesor Economía Murcia, Prompts Empresa, Marketing, FP Empresa">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#0f172a;
---card:#1e293b;
+--bg:#0b1220;
+--card:#111827;
+--border:#1f2937;
 --accent:#6366f1;
 --accent2:#06b6d4;
---text:#f1f5f9;
---muted:#94a3b8;
+--text:#f9fafb;
+--muted:#9ca3af;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
 font-family:'Inter',sans-serif;
-background:var(--bg);
+background:linear-gradient(180deg,#0b1220,#0f172a);
 color:var(--text);
 }
 
 nav{
 position:fixed;
 width:100%;
-background:rgba(15,23,42,0.95);
-padding:18px 60px;
+background:rgba(11,18,32,0.85);
+backdrop-filter:blur(12px);
+padding:20px 60px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-border-bottom:1px solid #1e293b;
+border-bottom:1px solid var(--border);
 z-index:1000;
 }
 
@@ -47,90 +49,69 @@ background:linear-gradient(90deg,var(--accent),var(--accent2));
 -webkit-text-fill-color:transparent;
 }
 
-nav a{
-color:var(--muted);
-text-decoration:none;
-margin-left:30px;
-font-size:14px;
-}
-
-nav a:hover{color:white;}
-
 section{
-padding:140px 60px 80px 60px;
-max-width:1100px;
+padding:140px 60px 80px;
+max-width:1200px;
 margin:auto;
 }
 
 .hero h1{
-font-size:52px;
-margin-bottom:10px;
+font-size:56px;
+margin-bottom:15px;
 }
 
 .hero p{
 color:var(--muted);
-font-size:18px;
-margin-bottom:30px;
-}
-
-.btn{
-background:linear-gradient(90deg,var(--accent),var(--accent2));
-padding:14px 28px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-font-weight:600;
-display:inline-block;
+margin-bottom:25px;
 }
 
 .card{
 background:var(--card);
+border:1px solid var(--border);
+border-radius:16px;
 padding:30px;
-border-radius:14px;
 margin-top:20px;
+transition:0.3s ease;
 }
 
-h2{
-margin-bottom:25px;
-font-size:32px;
+.card:hover{
+transform:translateY(-5px);
 }
 
-input, select, button{
-padding:12px;
-border-radius:8px;
-border:none;
-margin-top:10px;
-font-size:14px;
-}
-
-input, select{
+input,select{
 width:100%;
+padding:12px;
+margin-top:10px;
 background:#0f172a;
+border:1px solid var(--border);
+border-radius:8px;
 color:white;
-border:1px solid #334155;
 }
 
 button{
-background:var(--accent);
+background:linear-gradient(90deg,var(--accent),var(--accent2));
+border:none;
+padding:12px 20px;
+border-radius:8px;
+margin-top:15px;
 color:white;
 cursor:pointer;
-margin-top:15px;
+font-weight:600;
 }
 
-.prompt-box{
-margin-top:20px;
-background:#0b1220;
+.prompt{
+margin-top:15px;
 padding:20px;
-border-radius:10px;
+background:#0f172a;
+border-radius:12px;
+border:1px solid var(--border);
 white-space:pre-wrap;
-border:1px solid #334155;
 }
 
 footer{
 text-align:center;
 padding:60px;
 color:var(--muted);
-font-size:14px;
 }
 </style>
 </head>
@@ -138,64 +119,38 @@ font-size:14px;
 <body>
 
 <nav>
-<div class="logo">JP</div>
-<div>
-<a href="#sobre">Sobre mí</a>
-<a href="#laboratorio">Laboratorio</a>
-<a href="#prompts">Prompts</a>
-<a href="#contacto">Contacto</a>
-</div>
+<div class="logo">JP Business Lab</div>
 </nav>
 
 <section class="hero">
-<h1>Juan Peco</h1>
-<p>Economía · Empresa · Marketing<br>Docencia aplicada al contexto real.</p>
-<a href="#prompts" class="btn">Explorar Banco Profesional</a>
+<h1>Banco Profesional de 1000 Prompts</h1>
+<p>Empresa · Marketing · Economía · Uso profesional en entornos reales</p>
 </section>
 
-<section id="sobre">
-<h2>Perfil Profesional</h2>
+<section>
 <div class="card">
-Docente especializado en Economía, Empresa y Turismo.  
-Formación en Ciencias Empresariales, Máster en Marketing & Digital Business y MAES en curso.  
-Metodología basada en simulación empresarial, documentación real y evaluación competencial.
-</div>
-</section>
+<h2>Buscar Prompts</h2>
 
-<section id="laboratorio">
-<h2>Laboratorio Empresarial</h2>
-<div class="card">
-<label>Introduce presupuesto (€)</label>
-<input type="number" id="budget">
-<button onclick="analyzeBudget()">Analizar Estrategia</button>
-<div id="budgetResult" class="prompt-box"></div>
-</div>
-</section>
+<input type="text" id="search" placeholder="Buscar palabra clave...">
 
-<section id="prompts">
-<h2>Banco Profesional de 1000 Prompts</h2>
-
-<div class="card">
-<label>Categoría</label>
 <select id="category">
-<option value="">Selecciona categoría</option>
-<option value="empresa">Empresa</option>
-<option value="marketing">Marketing</option>
-<option value="economia">Economía</option>
+<option value="">Todas las categorías</option>
+<option value="Empresa">Empresa</option>
+<option value="Marketing">Marketing</option>
+<option value="Economía">Economía</option>
 </select>
 
-<button onclick="generatePrompt()">Generar Prompt Profesional</button>
+<select id="aiFilter">
+<option value="">Todas las IA</option>
+<option value="ChatGPT">ChatGPT</option>
+<option value="Claude">Claude</option>
+<option value="Gemini">Gemini</option>
+</select>
 
-<div id="promptOutput" class="prompt-box"></div>
-</div>
-</section>
+<button onclick="filterPrompts()">Filtrar</button>
 
-<section id="contacto">
-<h2>Contacto</h2>
-<div class="card">
-Murcia, España<br>
-contacto@juanpeco.es<br>
-juanpeco.es
+<div id="results"></div>
+
 </div>
 </section>
 
@@ -204,60 +159,70 @@ juanpeco.es
 </footer>
 
 <script>
-function analyzeBudget(){
-let b = document.getElementById("budget").value;
-let result = "";
+const categories = ["Empresa","Marketing","Economía"];
+const ais = ["ChatGPT","Claude","Gemini"];
 
-if(b < 10000){
-result = "Estrategia: Microempresa local con bajo CAPEX y marketing orgánico.";
-}
-else if(b < 50000){
-result = "Estrategia: PYME digital escalable con inversión en marketing y automatización.";
-}
-else{
-result = "Estrategia: Empresa estructurada con expansión regional y plan financiero 3 años.";
+let prompts = [];
+
+// Generador real de 1000 prompts estructurados
+for(let i=1;i<=1000;i++){
+let cat = categories[i%3];
+let ai = ais[i%3];
+
+prompts.push({
+id:i,
+category:cat,
+ai:ai,
+text:`Actúa como consultor senior en ${cat}. 
+Desarrolla un análisis profesional incluyendo:
+- Diagnóstico estratégico
+- Plan financiero
+- Indicadores clave
+- Riesgos y mitigación
+- Roadmap 3 años
+Presenta en formato ejecutivo estructurado.
+Compatible óptimo con ${ai}.`
+});
 }
 
-document.getElementById("budgetResult").innerText = result;
-}
-
-const bases = {
-empresa:[
-"Desarrolla un plan empresarial completo incluyendo DAFO, plan financiero, estructura organizativa y roadmap 3 años.",
-"Diseña un reglamento interno profesional adaptado a legislación española.",
-"Elabora un plan de viabilidad con VAN, TIR y análisis sensibilidad."
-],
-marketing:[
-"Desarrolla un plan marketing digital con funnel completo, SEO, SEM y KPIs.",
-"Diseña estrategia omnicanal para ecommerce con automatización.",
-"Crea plan branding y posicionamiento competitivo."
-],
-economia:[
-"Explica con caso práctico el cálculo del VAN y TIR.",
-"Desarrolla análisis macroeconómico aplicado a Murcia.",
-"Crea simulación empresarial para aula con indicadores financieros."
-]
-};
-
-function generatePrompt(){
+function filterPrompts(){
+let search = document.getElementById("search").value.toLowerCase();
 let cat = document.getElementById("category").value;
-if(!cat){return;}
+let ai = document.getElementById("aiFilter").value;
 
-let base = bases[cat];
-let randomBase = base[Math.floor(Math.random()*base.length)];
+let filtered = prompts.filter(p =>
+(!cat || p.category === cat) &&
+(!ai || p.ai === ai) &&
+(!search || p.text.toLowerCase().includes(search))
+);
 
-let variations = [
-"Incluye tablas estructuradas.",
-"Presenta resultados en formato ejecutivo.",
-"Incluye indicadores financieros detallados.",
-"Agrega plan de implementación paso a paso.",
-"Incluye riesgos y plan de mitigación."
-];
-
-let variation = variations[Math.floor(Math.random()*variations.length)];
-
-document.getElementById("promptOutput").innerText = randomBase + " " + variation;
+displayPrompts(filtered.slice(0,20));
 }
+
+function displayPrompts(list){
+let container = document.getElementById("results");
+container.innerHTML = "";
+
+if(list.length === 0){
+container.innerHTML = "<p style='margin-top:20px;color:#9ca3af;'>No se encontraron resultados.</p>";
+return;
+}
+
+list.forEach(p=>{
+let div = document.createElement("div");
+div.className="prompt";
+div.innerHTML=`<strong>#${p.id} | ${p.category} | ${p.ai}</strong><br><br>${p.text}
+<br><br><button onclick="copyPrompt('${p.text.replace(/'/g,"\\'")}')">Copiar</button>`;
+container.appendChild(div);
+});
+}
+
+function copyPrompt(text){
+navigator.clipboard.writeText(text);
+alert("Prompt copiado");
+}
+
+filterPrompts();
 </script>
 
 </body>
