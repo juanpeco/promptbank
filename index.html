@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JuanPeco • Prompt Studio & Business Lab</title>
+  <meta name="description" content="Banco profesional de 5000 prompts (empresa, marketing, economía) + simuladores y herramientas interactivas." />
+  <link rel="icon" href="assets/img/logo-juanpeco.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar" id="top">
+    <div class="container topbar__inner">
+      <a class="brand" href="#top" aria-label="Ir al inicio">
+        <img src="assets/img/logo-juanpeco.svg" alt="JuanPeco" class="brand__logo" />
+      </a>
+
+      <nav class="nav">
+        <a href="#prompts" class="nav__link">Prompts</a>
+        <a href="#tools" class="nav__link">Herramientas</a>
+        <a href="#about" class="nav__link">Sobre</a>
+      </nav>
+
+      <div class="topbar__actions">
+        <button class="btn btn--ghost" id="open-search" title="Buscar (Ctrl/⌘ + K)">
+          <span class="kbd">Ctrl</span><span class="kbd">K</span>
+          <span class="hide-sm">Buscar</span>
+        </button>
+        <button class="btn btn--primary" id="download-prompts">Exportar JSON</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <div class="pill">Blanco • Mostaza • Lila</div>
+          <h1>JuanPeco Prompt Studio <span class="grad">Top 1</span></h1>
+          <p class="lead">
+            5000 prompts profesionales (empresa, marketing, economía) + simulador de empresa, generador de casos,
+            juego de decisiones y laboratorio STEAM/robótica.
+          </p>
+
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#prompts">Explorar prompts</a>
+            <a class="btn btn--ghost" href="#tools">Ver herramientas</a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat">
+              <div class="stat__num" id="stat-prompts">—</div>
+              <div class="stat__label">Prompts</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">Notion‑style</div>
+              <div class="stat__label">Buscador + filtros</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">SaaS</div>
+              <div class="stat__label">Diseño premium</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__panel">
+          <div class="panel">
+            <div class="panel__head">
+              <div class="panel__title">Búsqueda instantánea</div>
+              <div class="panel__hint">Ctrl/⌘ + K</div>
+            </div>
+            <div class="panel__body">
+              <div class="searchbar" role="search">
+                <input id="quick-search" type="search" placeholder="Escribe: “pricing”, “CAC”, “SEO”, “modelo financiero”…" autocomplete="off" />
+                <button class="btn btn--primary btn--sm" id="quick-search-btn">Buscar</button>
+              </div>
+              <div class="mini-results" id="mini-results" aria-live="polite"></div>
+              <div class="muted mt-12">Tip: filtra por categoría, IA o “⭐⭐⭐⭐⭐”.</div>
+            </div>
+          </div>
+          <div class="panel panel--soft mt-16">
+            <div class="panel__body">
+              <div class="callout">
+                <div class="callout__icon">⚡</div>
+                <div>
+                  <div class="callout__title">Todo en un único repo</div>
+                  <div class="callout__text">HTML + CSS + JS (sin build). Sube a GitHub y edita en segundos.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="prompts" class="section">
+      <div class="container">
+        <div class="section__head">
+          <h2>Banco de prompts</h2>
+          <p class="muted">Estructurados, profesionales y listos para empresa (marketing + economía + operación + IA + STEAM).</p>
+        </div>
+
+        <div class="grid grid--3" id="category-cards" aria-label="Categorías"></div>
+
+        <div class="filters mt-20">
+          <div class="filters__row">
+            <div class="field">
+              <label for="filter-category">Categoría</label>
+              <select id="filter-category">
+                <option value="">Todas</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="filter-subcategory">Subcategoría</label>
+              <select id="filter-subcategory" disabled>
+                <option value="">Todas</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="filter-ai">IA</label>
+              <select id="filter-ai">
+                <option value="">Todas</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="filter-stars">Calidad</label>
+              <select id="filter-stars">
+                <option value="">Todas</option>
+                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+                <option value="⭐⭐⭐">⭐⭐⭐</option>
+              </select>
+            </div>
+
+            <div class="field field--grow">
+              <label for="filter-text">Buscar</label>
+              <input id="filter-text" type="text" placeholder="Escribe para filtrar (tipo Notion)" />
+            </div>
+          </div>
+
+          <div class="filters__row">
+            <div class="muted" id="results-meta">—</div>
+            <div class="right">
+              <button class="btn btn--ghost btn--sm" id="reset-filters">Reset</button>
+              <button class="btn btn--primary btn--sm" id="random-prompt">Sorpresa</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="layout mt-18">
+          <div class="layout__left">
+            <div class="listhead">
+              <div class="listhead__title">Resultados</div>
+              <div class="listhead__hint">Copia con 1 click</div>
+            </div>
+            <div class="prompt-list" id="prompt-list"></div>
+            <div class="pager" id="pager"></div>
+          </div>
+
+          <aside class="layout__right">
+            <div class="panel sticky">
+              <div class="panel__head">
+                <div class="panel__title">Editor</div>
+                <div class="panel__hint">Personaliza rápido</div>
+              </div>
+              <div class="panel__body">
+                <div class="muted">Selecciona un prompt para verlo aquí.</div>
+                <textarea id="prompt-editor" class="editor" placeholder="…" spellcheck="false"></textarea>
+                <div class="row mt-10">
+                  <button class="btn btn--primary" id="copy-editor">Copiar</button>
+                  <button class="btn btn--ghost" id="clear-editor">Limpiar</button>
+                </div>
+                <div class="muted mt-10">Atajo: Ctrl/⌘ + K para buscar.</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="tools" class="section section--alt">
+      <div class="container">
+        <div class="section__head">
+          <h2>Herramientas</h2>
+          <p class="muted">Simulaciones y utilidades interactivas para negocio y STEAM.</p>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button class="tab is-active" data-tab="simulator" role="tab" aria-selected="true">Simulador de empresa</button>
+          <button class="tab" data-tab="casegen" role="tab" aria-selected="false">Generador de casos</button>
+          <button class="tab" data-tab="decisiongame" role="tab" aria-selected="false">Juego de decisiones</button>
+          <button class="tab" data-tab="steam" role="tab" aria-selected="false">Laboratorio STEAM</button>
+        </div>
+
+        <div class="tabpanes">
+          <section class="pane is-active" id="pane-simulator" role="tabpanel">
+            <div class="grid grid--2">
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Inputs</div>
+                  <div class="panel__hint">Unit economics</div>
+                </div>
+                <div class="panel__body">
+                  <div class="grid grid--2">
+                    <div class="field">
+                      <label>Precio mensual (€)</label>
+                      <input type="number" id="sim-price" value="49" min="0" step="1">
+                    </div>
+                    <div class="field">
+                      <label>Clientes</label>
+                      <input type="number" id="sim-customers" value="200" min="0" step="1">
+                    </div>
+                    <div class="field">
+                      <label>Churn mensual (%)</label>
+                      <input type="number" id="sim-churn" value="3" min="0" step="0.1">
+                    </div>
+                    <div class="field">
+                      <label>CAC (€)</label>
+                      <input type="number" id="sim-cac" value="180" min="0" step="1">
+                    </div>
+                    <div class="field">
+                      <label>Margen bruto (%)</label>
+                      <input type="number" id="sim-gm" value="75" min="0" max="100" step="1">
+                    </div>
+                    <div class="field">
+                      <label>Costes fijos/mes (€)</label>
+                      <input type="number" id="sim-fixed" value="12000" min="0" step="100">
+                    </div>
+                    <div class="field">
+                      <label>Caja inicial (€)</label>
+                      <input type="number" id="sim-cash" value="80000" min="0" step="1000">
+                    </div>
+                    <div class="field">
+                      <label>Nuevos clientes/mes</label>
+                      <input type="number" id="sim-new" value="25" min="0" step="1">
+                    </div>
+                  </div>
+                  <div class="row mt-12">
+                    <button class="btn btn--primary" id="sim-run">Simular 12 meses</button>
+                    <button class="btn btn--ghost" id="sim-reset">Valores por defecto</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Resultados</div>
+                  <div class="panel__hint">MRR • LTV • Runway</div>
+                </div>
+                <div class="panel__body">
+                  <div class="kpis" id="sim-kpis"></div>
+                  <canvas id="sim-chart" height="160"></canvas>
+                  <div class="muted mt-10">Modelo simplificado (sin impuestos). Úsalo para exploración rápida.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="pane" id="pane-casegen" role="tabpanel">
+            <div class="grid grid--2">
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Brief</div>
+                  <div class="panel__hint">Genera un caso para equipo</div>
+                </div>
+                <div class="panel__body">
+                  <div class="field">
+                    <label>Industria</label>
+                    <select id="case-industry">
+                      <option>SaaS B2B</option><option>e-commerce</option><option>retail</option><option>fintech</option><option>educación</option><option>logística</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Objetivo</label>
+                    <select id="case-goal">
+                      <option>Mejorar rentabilidad</option>
+                      <option>Aumentar conversión</option>
+                      <option>Reducir churn</option>
+                      <option>Expandir a nuevo mercado</option>
+                      <option>Lanzar nuevo producto</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Restricciones (opcional)</label>
+                    <input id="case-constraints" type="text" placeholder="p.ej. sin aumentar headcount, presupuesto limitado, legal/rgpd…" />
+                  </div>
+                  <div class="row mt-12">
+                    <button class="btn btn--primary" id="case-generate">Generar caso</button>
+                    <button class="btn btn--ghost" id="case-copy">Copiar</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Caso generado</div>
+                  <div class="panel__hint">Listo para workshop</div>
+                </div>
+                <div class="panel__body">
+                  <textarea id="case-output" class="editor editor--tall" placeholder="Aquí aparecerá el caso…"></textarea>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="pane" id="pane-decisiongame" role="tabpanel">
+            <div class="grid grid--2">
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Escenario</div>
+                  <div class="panel__hint">Decisiones con consecuencias</div>
+                </div>
+                <div class="panel__body">
+                  <select id="game-scenario" class="select">
+                    <option value="saas">SaaS en crecimiento (churn sube)</option>
+                    <option value="ecom">e-commerce (ROAS cae)</option>
+                    <option value="ops">Operaciones (SLA en riesgo)</option>
+                  </select>
+                  <div class="mt-12" id="game-area"></div>
+                  <div class="row mt-12">
+                    <button class="btn btn--primary" id="game-restart">Reiniciar</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Marcador</div>
+                  <div class="panel__hint">KPIs del trimestre</div>
+                </div>
+                <div class="panel__body">
+                  <div class="kpis" id="game-kpis"></div>
+                  <div class="divider"></div>
+                  <div id="game-log" class="log"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="pane" id="pane-steam" role="tabpanel">
+            <div class="grid grid--2">
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Robot Grid</div>
+                  <div class="panel__hint">Aprende lógica y control</div>
+                </div>
+                <div class="panel__body">
+                  <canvas id="bot-canvas" width="420" height="420" class="canvas"></canvas>
+
+                  <div class="grid grid--3 mt-12">
+                    <button class="btn btn--ghost" data-cmd="F">Avanzar</button>
+                    <button class="btn btn--ghost" data-cmd="L">Girar izq</button>
+                    <button class="btn btn--ghost" data-cmd="R">Girar der</button>
+                  </div>
+
+                  <div class="field mt-12">
+                    <label>Programa (F/L/R, ej: F F R F L F)</label>
+                    <input id="bot-program" type="text" value="F F R F F L F" />
+                  </div>
+
+                  <div class="row mt-12">
+                    <button class="btn btn--primary" id="bot-run">Ejecutar</button>
+                    <button class="btn btn--ghost" id="bot-reset">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel__head">
+                  <div class="panel__title">Laboratorio</div>
+                  <div class="panel__hint">Mini‑herramientas STEAM</div>
+                </div>
+                <div class="panel__body">
+                  <div class="callout">
+                    <div class="callout__icon">🧪</div>
+                    <div>
+                      <div class="callout__title">Calculadora electrónica</div>
+                      <div class="callout__text">Ley de Ohm + divisores para prototipado.</div>
+                    </div>
+                  </div>
+
+                  <div class="grid grid--3 mt-12">
+                    <div class="field">
+                      <label>Voltaje (V)</label>
+                      <input id="ohm-v" type="number" value="5" step="0.1">
+                    </div>
+                    <div class="field">
+                      <label>Resistencia (Ω)</label>
+                      <input id="ohm-r" type="number" value="220" step="1">
+                    </div>
+                    <div class="field">
+                      <label>Corriente (A)</label>
+                      <input id="ohm-i" type="number" value="" placeholder="—" step="0.001">
+                    </div>
+                  </div>
+                  <div class="row mt-12">
+                    <button class="btn btn--primary" id="ohm-calc">Calcular</button>
+                    <div class="muted" id="ohm-out">—</div>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="callout">
+                    <div class="callout__icon">🤖</div>
+                    <div>
+                      <div class="callout__title">Proyectos sugeridos</div>
+                      <div class="callout__text">Genera un proyecto de robótica educativa por nivel.</div>
+                    </div>
+                  </div>
+
+                  <div class="field mt-12">
+                    <label>Nivel</label>
+                    <select id="steam-level">
+                      <option>Inicial</option><option>Intermedio</option><option>Avanzado</option>
+                    </select>
+                  </div>
+                  <div class="row mt-12">
+                    <button class="btn btn--ghost" id="steam-generate">Generar proyecto</button>
+                    <button class="btn btn--ghost" id="steam-copy">Copiar</button>
+                  </div>
+                  <textarea id="steam-output" class="editor editor--tall" placeholder="Proyecto STEAM…"></textarea>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section__head">
+          <h2>Sobre esta web</h2>
+          <p class="muted">Hecha para que la subas a GitHub y la evoluciones sin depender de Canva.</p>
+        </div>
+
+        <div class="grid grid--3">
+          <div class="panel panel--soft">
+            <div class="panel__body">
+              <div class="mini-title">Estructura</div>
+              <div class="muted">/index.html + /assets + /data/prompts.json</div>
+            </div>
+          </div>
+          <div class="panel panel--soft">
+            <div class="panel__body">
+              <div class="mini-title">Edición rápida</div>
+              <div class="muted">Cambia textos y estilos en <code>assets/css/styles.css</code></div>
+            </div>
+          </div>
+          <div class="panel panel--soft">
+            <div class="panel__body">
+              <div class="mini-title">Prompts</div>
+              <div class="muted">Se cargan desde <code>data/prompts.json</code> (5000 items).</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer mt-24">
+          <div class="muted">© <span id="year"></span> JuanPeco • Prompt Studio</div>
+          <a class="muted link" href="#top">Volver arriba ↑</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Command Palette -->
+  <div class="modal" id="palette" aria-hidden="true">
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-label="Buscar">
+      <div class="palette">
+        <div class="palette__head">
+          <input id="palette-input" type="text" placeholder="Buscar… (prompts, herramientas, categorías)" autocomplete="off" />
+          <button class="btn btn--ghost btn--sm" data-close="1">Esc</button>
+        </div>
+        <div class="palette__meta" id="palette-meta">—</div>
+        <div class="palette__results" id="palette-results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">Copiado ✅</div>
+</body>
+</html>
