@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JuanPeco Business Lab — Prompt Bank + Simuladores + STEAM</title>
+  <meta name="description" content="Banco de 5000 prompts profesionales (empresa, marketing, economía, STEAM). Buscador tipo Notion, filtros por IA y nivel, simulador de empresa, generador de casos y juegos." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Inicio">
+      <img src="assets/logo.svg" alt="JuanPeco Business Lab logo" class="brand-logo"/>
+    </a>
+
+    <nav class="nav">
+      <a href="#promptbank">Prompt Bank</a>
+      <a href="#tools">Herramientas</a>
+      <a href="#games">Juegos</a>
+      <a href="#steam">STEAM Lab</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <div class="top-actions">
+      <button class="btn ghost" id="cmdkBtn" title="Buscar (Ctrl/⌘ K)">
+        <span class="kbd">Ctrl</span><span class="kbd">K</span>
+      </button>
+      <a class="btn primary" href="#promptbank">Entrar</a>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero">
+      <div class="hero-left">
+        <div class="pill">
+          <span class="dot"></span>
+          <span>Premium • Flat • Animaciones suaves • Notion-like search</span>
+        </div>
+        <h1>Banco de prompts profesionales + simuladores empresariales + STEAM interactivo</h1>
+        <p class="lead">
+          <strong>JuanPeco Business Lab</strong> integra un prompt bank real (5000 prompts estructurados),
+          un simulador de empresa, generador de casos de negocio, juego de decisiones y un laboratorio STEAM
+          orientado a empresa, marketing, economía y robótica educativa.
+        </p>
+        <div class="hero-cta">
+          <button class="btn primary big" id="openSearchBtn">Abrir buscador</button>
+          <a class="btn soft big" href="#tools">Ver herramientas</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="stat-num">5000</div><div class="stat-label">prompts</div></div>
+          <div class="stat"><div class="stat-num">4</div><div class="stat-label">categorías pro</div></div>
+          <div class="stat"><div class="stat-num">3</div><div class="stat-label">modelos IA</div></div>
+          <div class="stat"><div class="stat-num">∞</div><div class="stat-label">iteración</div></div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="card glass">
+          <div class="card-head">
+            <div class="card-title">Búsqueda tipo Notion</div>
+            <div class="card-badges">
+              <span class="badge">Filtros</span>
+              <span class="badge">Fuzzy</span>
+              <span class="badge">Atajos</span>
+            </div>
+          </div>
+          <div class="search-mock">
+            <div class="search-line">
+              <span class="search-icon">⌘</span>
+              <span class="search-placeholder">Busca “pricing”, “DAFO”, “ROAS”, “robótica”…</span>
+            </div>
+            <div class="search-chips">
+              <span class="chip">Empresa</span>
+              <span class="chip">Marketing</span>
+              <span class="chip">Economía</span>
+              <span class="chip">STEAM</span>
+              <span class="chip">ChatGPT</span>
+              <span class="chip">Avanzado</span>
+            </div>
+          </div>
+          <div class="mini-list">
+            <div class="mini-item"><span class="mini-dot"></span> Caso de negocio en Markdown con supuestos</div>
+            <div class="mini-item"><span class="mini-dot"></span> Plan SEO técnico con checklist y KPIs</div>
+            <div class="mini-item"><span class="mini-dot"></span> Simulación macro: inflación vs tipos</div>
+            <div class="mini-item"><span class="mini-dot"></span> Proyecto STEAM: robot logístico con sensores</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="promptbank" class="section">
+      <div class="section-head">
+        <h2>Prompt Bank</h2>
+        <p>Explora por categorías visuales o usa el buscador tipo Notion (Ctrl/⌘ K).</p>
+      </div>
+
+      <div class="grid-4" id="categoryGrid">
+        <!-- populated by JS -->
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Exploración rápida</div>
+          <div class="panel-actions">
+            <div class="segmented" role="tablist" aria-label="Vista">
+              <button class="seg active" id="viewListBtn" aria-selected="true">Lista</button>
+              <button class="seg" id="viewCardsBtn" aria-selected="false">Tarjetas</button>
+            </div>
+            <button class="btn ghost" id="randomPromptBtn">Prompt aleatorio</button>
+          </div>
+        </div>
+
+        <div class="filters">
+          <input id="quickSearch" class="input" placeholder="Buscar en resultados (sin abrir CMDK)…" />
+          <select id="filterCategory" class="input">
+            <option value="">Categoría</option>
+          </select>
+          <select id="filterModel" class="input">
+            <option value="">IA</option>
+            <option>ChatGPT</option>
+            <option>Claude</option>
+            <option>Gemini</option>
+          </select>
+          <select id="filterLevel" class="input">
+            <option value="">Nivel</option>
+            <option>Básico</option>
+            <option>Intermedio</option>
+            <option>Avanzado</option>
+          </select>
+          <button class="btn soft" id="clearFiltersBtn">Limpiar</button>
+        </div>
+
+        <div id="resultsMeta" class="meta"></div>
+        <div id="results" class="results list"></div>
+      </div>
+    </section>
+
+    <section id="tools" class="section">
+      <div class="section-head">
+        <h2>Herramientas</h2>
+        <p>Utilidades listas para usar: simulador de empresa, generador de casos de negocio y más.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Simulador de empresa</div>
+          <p class="muted">Proyección rápida con supuestos explícitos. No es asesoramiento financiero.</p>
+          <div class="form">
+            <label>Ingresos mensuales (€)<input id="simRevenue" class="input" type="number" value="25000"></label>
+            <label>Costes mensuales (€)<input id="simCosts" class="input" type="number" value="18000"></label>
+            <label>Inversión inicial (€)<input id="simInvestment" class="input" type="number" value="15000"></label>
+            <label>Horizonte (meses)<input id="simMonths" class="input" type="number" value="12"></label>
+            <button class="btn primary" id="runSimBtn">Simular</button>
+          </div>
+          <div class="output" id="simOutput"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Generador de casos de negocio</div>
+          <p class="muted">Estructura ejecutiva: contexto → hipótesis → números → riesgos → decisión.</p>
+          <div class="form">
+            <label>Idea / proyecto<input id="caseIdea" class="input" placeholder="Ej: Lanzar suscripción premium"></label>
+            <label>Cliente / mercado<input id="caseMarket" class="input" placeholder="Ej: B2B SaaS (España)"></label>
+            <label>Presupuesto (€)<input id="caseBudget" class="input" type="number" value="30000"></label>
+            <label>Plazo (semanas)<input id="caseWeeks" class="input" type="number" value="8"></label>
+            <button class="btn primary" id="genCaseBtn">Generar caso</button>
+          </div>
+          <div class="output" id="caseOutput"></div>
+          <button class="btn soft" id="copyCaseBtn" disabled>Copiar</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Generador de prompt “perfecto”</div>
+          <p class="muted">Crea un prompt profesional combinando rol, objetivo, restricciones y salida.</p>
+          <div class="form">
+            <label>Rol<input id="ppRole" class="input" placeholder="Ej: consultor de pricing"></label>
+            <label>Objetivo<input id="ppGoal" class="input" placeholder="Ej: definir pricing por segmentos"></label>
+            <label>Restricciones<input id="ppConstraints" class="input" placeholder="Ej: sin descuentos, margen mínimo 40%"></label>
+            <label>Formato<input id="ppFormat" class="input" placeholder="Ej: tabla + bullets"></label>
+            <button class="btn primary" id="genPerfectPromptBtn">Generar</button>
+          </div>
+          <div class="output" id="ppOutput"></div>
+          <button class="btn soft" id="copyPPBtn" disabled>Copiar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="games" class="section">
+      <div class="section-head">
+        <h2>Juegos</h2>
+        <p>Aprendizaje interactivo: decisiones empresariales con feedback cuantificado.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Juego de decisiones empresariales</div>
+          <p class="muted">Elige una opción y observa impacto en beneficio, riesgo y reputación.</p>
+          <div class="game" id="bizGame">
+            <div class="game-scenario" id="gameScenario"></div>
+            <div class="game-actions" id="gameActions"></div>
+            <div class="game-metrics">
+              <div><span>Beneficio</span><strong id="mProfit">0</strong></div>
+              <div><span>Riesgo</span><strong id="mRisk">0</strong></div>
+              <div><span>Reputación</span><strong id="mBrand">0</strong></div>
+            </div>
+            <button class="btn soft" id="newScenarioBtn">Nuevo escenario</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Sprint Strategy (mini)</div>
+          <p class="muted">Prioriza 5 iniciativas con presupuesto limitado.</p>
+          <div class="game" id="sprintGame">
+            <div class="sprint-meta">
+              <div>Presupuesto: <strong id="budgetLeft">100</strong></div>
+              <div>Impacto: <strong id="impactScore">0</strong></div>
+            </div>
+            <div class="sprint-list" id="sprintList"></div>
+            <button class="btn primary" id="resetSprintBtn">Reiniciar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="steam" class="section">
+      <div class="section-head">
+        <h2>STEAM Lab</h2>
+        <p>Micro-simulaciones: logística, robótica educativa y pensamiento computacional.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Robot Grid (path)</div>
+          <p class="muted">Haz clic para colocar obstáculos. Pulsa “Resolver”.</p>
+          <div class="robot-grid" id="robotGrid"></div>
+          <div class="row">
+            <button class="btn primary" id="solveGridBtn">Resolver</button>
+            <button class="btn soft" id="clearGridBtn">Limpiar</button>
+          </div>
+          <div class="meta" id="gridMeta"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Inventario (reorder point)</div>
+          <p class="muted">Cálculo rápido de punto de pedido y stock de seguridad.</p>
+          <div class="form">
+            <label>Demanda diaria (u)<input id="invDemand" class="input" type="number" value="40"></label>
+            <label>Lead time (días)<input id="invLead" class="input" type="number" value="7"></label>
+            <label>Desv. demanda (u)<input id="invStd" class="input" type="number" value="12"></label>
+            <label>Nivel servicio (0.90-0.99)<input id="invService" class="input" type="number" step="0.01" value="0.95"></label>
+            <button class="btn primary" id="calcInvBtn">Calcular</button>
+          </div>
+          <div class="output" id="invOutput"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Experimento A/B (mini)</div>
+          <p class="muted">Simula test con conversión y tamaño de muestra.</p>
+          <div class="form">
+            <label>Conv. base (%)<input id="abBase" class="input" type="number" value="2.0" step="0.1"></label>
+            <label>Mejora esperada (%)<input id="abLift" class="input" type="number" value="15" step="1"></label>
+            <label>Tráfico diario<input id="abTraffic" class="input" type="number" value="3000"></label>
+            <button class="btn primary" id="calcAbBtn">Estimar</button>
+          </div>
+          <div class="output" id="abOutput"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-head">
+        <h2>About</h2>
+        <p>Proyecto listo para GitHub Pages y edición rápida (HTML/CSS/JS). Sin frameworks.</p>
+      </div>
+
+      <div class="card">
+        <div class="about-grid">
+          <div>
+            <h3>Marca</h3>
+            <p class="muted">Colores: blanco + mostaza + lila. Tipografía Inter. Flat premium + sombras suaves.</p>
+          </div>
+          <div>
+            <h3>Contenido</h3>
+            <p class="muted">5000 prompts estructurados (JSON). Buscador tipo Notion con atajos y filtros por IA/nivel.</p>
+          </div>
+          <div>
+            <h3>Producto</h3>
+            <p class="muted">Simuladores, generadores, juegos y STEAM Lab integrados en una sola web.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-left">
+        <img src="assets/favicon.svg" alt="" class="footer-icon">
+        <div>
+          <div class="footer-title">JuanPeco Business Lab</div>
+          <div class="footer-sub">Hecho para GitHub Pages • Edición sencilla • 100% estático</div>
+        </div>
+      </div>
+      <div class="footer-right">
+        <a class="btn ghost" href="#top">↑ Arriba</a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- CMDK / Notion-like search -->
+  <div class="modal hidden" id="cmdkModal" role="dialog" aria-modal="true" aria-label="Buscador">
+    <div class="modal-backdrop" id="cmdkBackdrop"></div>
+    <div class="cmdk">
+      <div class="cmdk-top">
+        <div class="cmdk-input-wrap">
+          <span class="cmdk-icon">⌕</span>
+          <input id="cmdkInput" class="cmdk-input" placeholder="Buscar prompts, herramientas, juegos… (Ej: DAFO, ROAS, robot, pricing)" />
+        </div>
+        <button class="btn ghost" id="closeCmdkBtn">Esc</button>
+      </div>
+
+      <div class="cmdk-filters">
+        <select id="cmdkCategory" class="input small"><option value="">Categoría</option></select>
+        <select id="cmdkModel" class="input small">
+          <option value="">IA</option><option>ChatGPT</option><option>Claude</option><option>Gemini</option>
+        </select>
+        <select id="cmdkLevel" class="input small">
+          <option value="">Nivel</option><option>Básico</option><option>Intermedio</option><option>Avanzado</option>
+        </select>
+        <button class="btn soft small" id="cmdkClearBtn">Limpiar</button>
+      </div>
+
+      <div class="cmdk-results" id="cmdkResults"></div>
+      <div class="cmdk-hint">
+        <span class="kbd">↑</span><span class="kbd">↓</span> navegar
+        <span class="kbd">Enter</span> abrir
+        <span class="kbd">Esc</span> cerrar
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt Drawer -->
+  <div class="drawer hidden" id="promptDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <div>
+          <div class="drawer-title" id="drawerTitle"></div>
+          <div class="drawer-sub" id="drawerSub"></div>
+        </div>
+        <div class="drawer-actions">
+          <button class="btn soft" id="copyPromptBtn">Copiar</button>
+          <button class="btn ghost" id="closeDrawerBtn">Cerrar</button>
+        </div>
+      </div>
+      <pre class="drawer-body" id="drawerBody"></pre>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copiado ✅</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
